@@ -97,7 +97,6 @@ jobs:
     # If this step fails, then you should remove it and run the build manually (see below)
     - name: Build
       run: |
-        source /opt/intel/oneapi/setvars.sh
         mkdir -p build && cd build
         cmake ..
         make -j
