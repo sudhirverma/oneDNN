@@ -81,11 +81,11 @@ jobs:
     - name: Build
       run: |
         mkdir -p build && cd build
-        export CC=clang
-        export CXX=clang++
+        export CC=icx
+        export CXX=icpx
         cmake .. \
-          -DDNNL_CPU_RUNTIME=SYCL \
-          -DDNNL_GPU_RUNTIME=SYCL
+                  -DDNNL_CPU_RUNTIME=SYCL \
+                  -DDNNL_GPU_RUNTIME=SYCL
                   
 
     # ℹ️ Command-line programs to run using the OS shell.
