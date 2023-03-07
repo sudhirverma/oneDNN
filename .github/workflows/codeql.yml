@@ -86,9 +86,8 @@ jobs:
         export CC=clang
         export CXX=clang++
         cmake .. \
-                  -DCMAKE_SYSTEM_NAME=Linux \
-                  -DCMAKE_SYSTEM_PROCESSOR=AARCH64 \
-                  -DCMAKE_LIBRARY_PATH=/usr/aarch64-linux-gnu/lib
+          -DDNNL_CPU_RUNTIME=SYCL \
+          -DDNNL_GPU_RUNTIME=SYCL
                   
 
     # ℹ️ Command-line programs to run using the OS shell.
