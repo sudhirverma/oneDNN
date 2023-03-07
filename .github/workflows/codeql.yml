@@ -56,18 +56,31 @@ jobs:
     
     - name: Install Intel® oneAPI DPC++/C++ Compiler
       run: $CONDA/bin/conda install -c intel dpcpp_linux-64
+      
+#      - name: Configure TBB
+#       run: |
+#         export BUILD_HOME_oneDPL="$(pwd)"
+#         echo $BUILD_HOME_oneDPL
+#         echo "Do our experiments in /tmp"
+#         cd /tmp
+#         echo "Clone oneTBB repository"
+#         git clone https://github.com/oneapi-src/oneTBB.git
+#         cd oneTBB
+#         echo "Create binary directory for out-of-source build"
+#         mkdir build && cd build
+#         echo "Configure: customize CMAKE_INSTALL_PREFIX and disable TBB_TEST to avoid tests build"
+#         cmake -DCMAKE_INSTALL_PREFIX=/usr/local -DTBB_TEST=OFF ..
+#         echo "Build TBB"
+#         cmake --build .
+#         echo "Install TBB"
+#         sudo cmake --install .
+#         cd $BUILD_HOME_oneDPL
 
     # Autobuild attempts to build any compiled languages  (C/C++, C#, Go, or Java).
     # If this step fails, then you should remove it and run the build manually (see below)
     - name: Build
       run: |
-        mkdir -p build
-        cd build
-        export cc=icx
-        export cxx=icpx
-        cmake .. \
-                  -DDNNL_CPU_RUNTIME=SYCL \
-                  -DDNL_GPU_RUNTIME=SYCL
+        mkdir -p build && cd build && cmake ..
                   
 
     # ℹ️ Command-line programs to run using the OS shell.
