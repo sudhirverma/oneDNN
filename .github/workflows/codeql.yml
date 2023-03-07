@@ -78,24 +78,6 @@ jobs:
 #     #sudo apt install libomp-dev
 #     #sudo apt install ocl-icd-opencl-dev
               
-    - name: install dep
-      run: |
-        sudo apt update -y
-        cd /tmp
-        sudo apt-get install intel-opencl-icd intel-level-zero-gpu level-zero intel-media-va-driver-non-free libmfx1
-
-        # OPTIONAL: Install developer packages
-        sudo apt-get install libigc-dev intel-igc-cm libigdfcl-dev libigfxcmrt-dev level-zero-dev
-        wget https://apt.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB
-        sudo apt-key add GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB
-        rm GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB
-
-        echo "deb https://apt.repos.intel.com/oneapi all main" | sudo tee /etc/apt/sources.list.d/oneAPI.list
-        sudo apt update
-        cd -
-        sudo apt install intel-basekit -y
-        sudo apt install intel-hpckit
-        sudo apt install cmake -y
 
     # Autobuild attempts to build any compiled languages  (C/C++, C#, Go, or Java).
     # If this step fails, then you should remove it and run the build manually (see below)
@@ -103,7 +85,7 @@ jobs:
       run: |
         mkdir -p build && cd build
         cmake ..
-        make -j
+        make -2j
 
     # ℹ️ Command-line programs to run using the OS shell.
     # 📚 See https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsrun
