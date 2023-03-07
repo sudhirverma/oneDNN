@@ -58,7 +58,7 @@ jobs:
     - name: Configure TBB
       run: |
         export BUILD_HOME_oneDNN="$(pwd)"
-        echo $BUILD_HOME_oneDNN`
+        echo $BUILD_HOME_oneDNN
         echo "Do our experiments in /tmp"
         cd /tmp
         echo "Clone oneTBB repository"
@@ -73,6 +73,7 @@ jobs:
         echo "Install TBB"
         sudo cmake --install .
         cd $BUILD_HOME_oneDNN
+        pwd
         
               
     - name: install dep
