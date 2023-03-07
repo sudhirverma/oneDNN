@@ -73,37 +73,28 @@ jobs:
         echo "Install TBB"
         sudo cmake --install .
         cd $BUILD_HOME_oneDNN
-        
+    
+    #sudo apt install clang
+    #sudo apt install libomp-dev
+    #sudo apt install ocl-icd-opencl-dev
               
     - name: install dep
       run: |
-        sudo apt install clang
-        sudo apt install libomp-dev
-        sudo apt install ocl-icd-opencl-dev
+        sudo apt install intel-basekit -y
+        sudo apt install intel-hpckit -y
 
     # Autobuild attempts to build any compiled languages  (C/C++, C#, Go, or Java).
     # If this step fails, then you should remove it and run the build manually (see below)
     - name: Build
       run: |
-        set -x
-        source $CONDA/bin/activate
-        export PATH=$CONDA/lib:$PATH
-        export CPATH=$CONDA/include:$CPATH
-        export OCL_ICD_FILENAMES=$CONDA/lib/libintelocl.so
-        echo "::warning::Compiler: $(dpcpp --version)"
-        make_targets="sycl_iterator.pass"
-        ctest_flags="-R sycl_iterator.pass"
-        echo "::warning::dpcpp backend is set. Compile and run only sycl_iterator.pass"
+        source /opt/intel/oneapi/setvars.sh
         mkdir -p build && cd build
-        lscpu
+        export CC=icx
+        export CXX=icpx
         cmake .. \
-          -DCMAKE_CXX_COMPILER=dpcpp \
-          -DONEDPL_BACKEND=dpcpp
-        make VERBOSE=1 -j2 ${make_targets}
-        ctest --timeout 360 --output-on-failure ${ctest_flags}
-
-      
-                  
+          -DDNNL_CPU_RUNTIME=SYCL \
+          -DDNNL_GPU_RUNTIME=SYCL
+        make -j
 
     # ℹ️ Command-line programs to run using the OS shell.
     # 📚 See https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsrun
