@@ -95,12 +95,8 @@ jobs:
         ctest_flags="-R sycl_iterator.pass"
         echo "::warning::dpcpp backend is set. Compile and run only sycl_iterator.pass"
         mkdir -p build && cd build
-        export CC=clang
-        export CXX=clang++
         lscpu
         cmake .. \
-          -DDNNL_CPU_RUNTIME=SYCL \
-          -DDNNL_GPU_RUNTIME=SYCL \
           -DCMAKE_CXX_COMPILER=dpcpp \
           -DONEDPL_BACKEND=dpcpp
         make VERBOSE=1 -j2 ${make_targets}
