@@ -83,6 +83,7 @@ jobs:
         mkdir -p build && cd build
         sudo apt install clang
         sudo apt install libomp-dev
+        sudo apt install ocl-icd-opencl-dev
         export CC=clang
         export CXX=clang++
         cmake .. \
