@@ -80,7 +80,12 @@ jobs:
     # If this step fails, then you should remove it and run the build manually (see below)
     - name: Build
       run: |
-        mkdir -p build && cd build && cmake ..
+        mkdir -p build && cd build
+        export CC=clang
+        export CXX=clang++
+        cmake .. \
+          -DDNNL_CPU_RUNTIME=SYCL \
+          -DDNNL_GPU_RUNTIME=SYCL
                   
 
     # ℹ️ Command-line programs to run using the OS shell.
