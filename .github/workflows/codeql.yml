@@ -85,7 +85,7 @@ jobs:
       run: |
         mkdir -p build && cd build
         cmake ..
-        make -2j
+        make -j2
 
     # ℹ️ Command-line programs to run using the OS shell.
     # 📚 See https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsrun
