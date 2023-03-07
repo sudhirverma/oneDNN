@@ -86,9 +86,16 @@ jobs:
     # If this step fails, then you should remove it and run the build manually (see below)
     - name: Build
       run: |
-        mkdir -p build && cd build
+        set -x
+        source $CONDA/bin/activate
+        export PATH=$CONDA/lib:$PATH
+        export CPATH=$CONDA/include:$CPATH
+        export OCL_ICD_FILENAMES=$CONDA/lib/libintelocl.so
+        echo "::warning::Compiler: $(dpcpp --version)"
         make_targets="sycl_iterator.pass"
         ctest_flags="-R sycl_iterator.pass"
+        echo "::warning::dpcpp backend is set. Compile and run only sycl_iterator.pass"
+        mkdir -p build && cd build
         export CC=clang
         export CXX=clang++
         lscpu
