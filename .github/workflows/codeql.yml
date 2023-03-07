@@ -81,8 +81,9 @@ jobs:
     - name: Build
       run: |
         mkdir -p build && cd build
-        export CC=aarch64-linux-gnu-gcc
-        export CXX=aarch64-linux-gnu-g++
+        sudo apt install clang
+        export CC=clang
+        export CXX=clang++
         cmake .. \
                   -DCMAKE_SYSTEM_NAME=Linux \
                   -DCMAKE_SYSTEM_PROCESSOR=AARCH64 \
