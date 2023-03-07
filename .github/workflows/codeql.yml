@@ -87,11 +87,16 @@ jobs:
     - name: Build
       run: |
         mkdir -p build && cd build
+        make_targets="sycl_iterator.pass"
+        ctest_flags="-R sycl_iterator.pass"
         export CC=clang
         export CXX=clang++
+        lscpu
         cmake .. \
           -DDNNL_CPU_RUNTIME=SYCL \
           -DDNNL_GPU_RUNTIME=SYCL
+        make VERBOSE=1 -j2 ${make_targets}
+        ctest --timeout 360 --output-on-failure ${ctest_flags}
 
       
                   
