@@ -82,6 +82,7 @@ jobs:
       run: |
         mkdir -p build && cd build
         sudo apt install clang
+        sudo apt install libomp-dev
         export CC=clang
         export CXX=clang++
         cmake .. \
