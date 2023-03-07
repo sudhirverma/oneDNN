@@ -52,48 +52,44 @@ jobs:
         # Details on CodeQL's query packs refer to : https://docs.github.com/en/code-security/code-scanning/automatically-scanning-your-code-for-vulnerabilities-and-errors/configuring-code-scanning#using-queries-in-ql-packs
         # queries: security-extended,security-and-quality
     
-    - name: Install Intel® oneAPI DPC++/C++ Compiler
-      run: $CONDA/bin/conda install -c intel dpcpp_linux-64
+#     - name: Install Intel® oneAPI DPC++/C++ Compiler
+#       run: $CONDA/bin/conda install -c intel dpcpp_linux-64
       
-    - name: Configure TBB
-      run: |
-        export BUILD_HOME_oneDNN="$(pwd)"
-        echo $BUILD_HOME_oneDNN
-        echo "Do our experiments in /tmp"
-        cd /tmp
-        echo "Clone oneTBB repository"
-        git clone https://github.com/oneapi-src/oneTBB.git
-        cd oneTBB
-        echo "Create binary directory for out-of-source build"
-        mkdir build && cd build
-        echo "Configure: customize CMAKE_INSTALL_PREFIX and disable TBB_TEST to avoid tests build"
-        cmake -DCMAKE_INSTALL_PREFIX=/usr/local -DTBB_TEST=OFF ..
-        echo "Build TBB"
-        cmake --build .
-        echo "Install TBB"
-        sudo cmake --install .
-        cd $BUILD_HOME_oneDNN
+#     - name: Configure TBB
+#       run: |
+#         export BUILD_HOME_oneDNN="$(pwd)"
+#         echo $BUILD_HOME_oneDNN
+#         echo "Do our experiments in /tmp"
+#         cd /tmp
+#         echo "Clone oneTBB repository"
+#         git clone https://github.com/oneapi-src/oneTBB.git
+#         cd oneTBB
+#         echo "Create binary directory for out-of-source build"
+#         mkdir build && cd build
+#         echo "Configure: customize CMAKE_INSTALL_PREFIX and disable TBB_TEST to avoid tests build"
+#         cmake -DCMAKE_INSTALL_PREFIX=/usr/local -DTBB_TEST=OFF ..
+#         echo "Build TBB"
+#         cmake --build .
+#         echo "Install TBB"
+#         sudo cmake --install .
+#         cd $BUILD_HOME_oneDNN
     
-    #sudo apt install clang
-    #sudo apt install libomp-dev
-    #sudo apt install ocl-icd-opencl-dev
+#     #sudo apt install clang
+#     #sudo apt install libomp-dev
+#     #sudo apt install ocl-icd-opencl-dev
               
     - name: install dep
       run: |
-        sudo apt install intel-basekit -y
-        sudo apt install intel-hpckit -y
+        sudo apt update -y
+        sudo apt upgrade -y
+        sudo apt install cmake -y
 
     # Autobuild attempts to build any compiled languages  (C/C++, C#, Go, or Java).
     # If this step fails, then you should remove it and run the build manually (see below)
     - name: Build
       run: |
-        source /opt/intel/oneapi/setvars.sh
         mkdir -p build && cd build
-        export CC=icx
-        export CXX=icpx
-        cmake .. \
-          -DDNNL_CPU_RUNTIME=SYCL \
-          -DDNNL_GPU_RUNTIME=SYCL
+        cmake ..
         make -j
 
     # ℹ️ Command-line programs to run using the OS shell.
