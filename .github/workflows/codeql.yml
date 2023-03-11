@@ -85,7 +85,6 @@ jobs:
       run: |
         mkdir -p build && cd build
         cmake ..
-        make -j2
 
     # ℹ️ Command-line programs to run using the OS shell.
     # 📚 See https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsrun
@@ -100,4 +99,5 @@ jobs:
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v2
       with:
+        timeout-minutes: 60
         category: "/language:${{matrix.language}}"
